@@ -1,5 +1,5 @@
 # Define the playlist URL and log file
-$playlistUrl = "https://www.youtube.com/playlist?list=PL7hXETpMiNVNEI9I0iP2ham5uAm5ViAdW"
+$playlistUrl = "https://www.youtube.com/playlist?list=PLAYLIST"
 $logFile = "playlist_resolution_log.txt"
 
 # Clear the log file if it exists
