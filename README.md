@@ -7,7 +7,7 @@ For Audio and Video technical details and workflow, please check my Reddit post 
 [Part 02 - My experience uploading 8K resolution videos to YouTube](https://www.reddit.com/r/videography/comments/1jg89z7)
 
 **Dependencies**  
-Optional: [ffpb - A Terminal Progress Bar for ffmpeg](https://github.com/althonos/ffpb)
+Optional: [ffpb - A Terminal Progress Bar for ffmpeg](https://github.com/althonos/ffpb)  
 ffmpeg 2025-03-20  
 ffprobe 2025-03-20  
 mediainfo 2025-03-20  
