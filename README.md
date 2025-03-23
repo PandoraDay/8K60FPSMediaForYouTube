@@ -1,7 +1,7 @@
 # 8K60FPSMediaForYouTube
 Scripts that I used for working and preparing media to upload 8K 7680x4320 60FPS (4320p60) to YouTube.
 
-Here, I share some scripts I used to work and upload 8K 7680x4320 60FPS Media to YouTube. Some of them are Windows CMD BATS, some of them are Powershell 7.5.0 PS1 Scripts. I am not by all means an expert.  I did this with help of Internet (AskUbuntu, Reddit, Stack Overflow, Super User, VideoHelp Forum, etc.) and AI such as Kimi AI, DeepSeek, ChatGPT and Microsoft Copilot  
+Here, I share some scripts I used to work and upload 8K 7680x4320 60FPS Media to YouTube. Some of them are Windows CMD BATS, some of them are Powershell 7.5.0 PS1 Scripts. I am not by all means an expert.  I did this with help of Internet (AskUbuntu, Reddit, Stack Overflow, Super User, VideoHelp Forum, etc.) and AI such as Kimi AI, DeepSeek, ChatGPT and Microsoft Copilot. Please, feel free to use and adapt these scripts to your convenience.  
 
 For Audio and Video technical details and workflow, please check my Reddit post (I got banned from Reddit after that post, for some reason)  
 [Part 02 - My experience uploading 8K resolution videos to YouTube](https://www.reddit.com/r/videography/comments/1jg89z7)
