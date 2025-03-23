@@ -1,0 +1,35 @@
+1Pass Only SVT
+ffmpeg -i "01.mov" -hide_banner -movflags +faststart -use_editlist 0 -s 7680x4320 -r 60 -fps_mode cfr -video_track_timescale 60000 -c:v libsvtav1 -svtav1-params "keyint=30:profile=0:level=61:color-primaries=bt709:transfer-characteristics=bt709:matrix-coefficients=bt709" -crf 23 -preset 5 -bf 2 -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:a libopus -b:a 384k -ar 48000 -ac 2 -map_metadata -1 -map_chapters -1 -metadata handler_name= -metadata vendor_id= -metadata encoder= -map 0:v:0 -map 0:a:0 -metadata:s:v:0 handler_name= -metadata:s:v:0 vendor_id= -metadata:s:v:0 encoder= -metadata:s:a:0 handler_name= -metadata:s:a:0 vendor_id= -metadata:s:a:0 encoder= -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -strict experimental -f mp4 "02.mp4"
+
+1Pass Lossless LibAOM AV1
+
+ffmpeg -i "input.mov" -hide_banner -movflags +faststart -use_editlist 0 -s 7680x4320 -r 60 -fps_mode cfr -video_track_timescale 60000 -c:v libaom-av1 -aom-params lossless=1 -crf 0 -b:v 0 -cpu-used 8 -row-mt 1 -threads 16 -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -profile:v 0 -level:v 6.1 -c:a libopus -b:a 384k -ar 48000 -ac 2 -map_metadata -1 -map_metadata:s -1 -map_chapters -1 -metadata handler_name="" -metadata vendor_id="" -map 0:v:0 -map 0:a:0 -metadata:s:v:0 handler_name="" -metadata:s:v:0 vendor_id="" -metadata:s:a:0 handler_name="" -metadata:s:a:0 vendor_id="" -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -strict experimental -f mp4 "77hellosav1lossless.mp4"
+
+MP4 to Apple ProRes 422
+
+ffmpeg -i "input.mp4" -hide_banner -movflags +faststart -use_editlist 0 -r 60 -fps_mode cfr -video_track_timescale 60000 -c:v prores_ks -profile:v 2 -pix_fmt yuv422p10le -c:a pcm_s16le -ar 48000 -ac 2 -map_metadata -1 -map_chapters -1 -metadata handler_name= -metadata vendor_id= -metadata encoder= -map 0:v:0 -map 0:a:0 -metadata:s:v:0 handler_name= -metadata:s:v:0 vendor_id= -metadata:s:v:0 encoder= -metadata:s:a:0 handler_name= -metadata:s:a:0 vendor_id= -metadata:s:a:0 encoder= -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -f mov "output.mov"
+
+Only Clear Metadata, FastStart and No Edit Lists
+ffmpeg -i "Eye.mov" -hide_banner -movflags +faststart -use_editlist 0 -map_metadata -1 -map_metadata:s -1 -map_chapters -1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -c:v copy -c:a copy "01.mov"
+
+Probe FastStart
+#If seeks 0 means Fast Start is Enabled
+ffprobe -hide_banner -v debug file.mp4 2>&1 | Select-String seeks
+
+#If mov is at the beggining, Fast Start is Enabled
+ffmpeg -hide_banner -v trace -i "input.mp4" 2>&1 | Select-String -Pattern "type:'mdat'", "type:'moov'"
+
+#If 'Yes' Fast Start is Enabled
+mediainfo -f file.mp4 | Select-String IsStreamable
+
+Check Timestamp
+ffprobe -i input.mp4 -hide_banner -show_streams | Select-String "time_base"
+
+Check FrameRate
+ffprobe -hide_banner -v error -show_entries stream=r_frame_rate -of default=nw=1 "input"
+
+Count Frames
+mediainfo --fullscan "01.mov" | sls "Frame count"
+
+Clean and Only Resample MOV Audio to 48000Hz
+ffmpeg -i "input.mov" -hide_banner -movflags +faststart -use_editlist 0 -c:v copy -c:a pcm_s16le -ar 48000 -ac 2 -af "aresample=resampler=soxr:precision=33" -r 60 -fps_mode cfr -video_track_timescale 60000 -map_metadata -1 -map_chapters -1 -metadata handler_name= -metadata vendor_id= -metadata encoder= -map 0:v:0 -map 0:a:0 -metadata:s:v:0 handler_name= -metadata:s:v:0 vendor_id= -metadata:s:v:0 encoder= -metadata:s:a:0 handler_name= -metadata:s:a:0 vendor_id= -metadata:s:a:0 encoder= -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -strict experimental -f mov "output.mov"
