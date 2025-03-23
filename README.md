@@ -21,7 +21,7 @@ Important for PS1 Files that invoke `Start-Job` for parallell processing. These 
 **Directory Tree**  
 Some of these scripts require the following Directory Tree: `Current Directory\new\svt`
 
-**Quick Description of Files**  
+**Description of Files**  
 
 **8K Availability Check.py**  
 Checks and prints the exact date and time when a video is available for viewing in 8K 4320p60 resolution in YouTube. It invokes yt-dlp with th -F Parameter and looks for the String 4320p every 5 minutes. Ideally, when YouTube finishes processing the video up to 4320p60, the Script prints the exact Date and Time when the video gets processed by YouTube in 8K, and logs the info both in ther Terminal and a Log File.  
