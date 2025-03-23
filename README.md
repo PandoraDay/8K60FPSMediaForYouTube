@@ -15,7 +15,7 @@ Python 3.13
 yt-dlp  
 Windows CMD  
 Windows PowerShell 7.5.0  
-Important for PS1 Files that invoke Start-Job for parallell processing. These PS1 Scripts might not work with PowerShell 5.0 included in Windows by default  
+Important for PS1 Files that invoke `Start-Job` for parallell processing. These PS1 Scripts might not work with PowerShell 5.0 included in Windows by default  
 
 
 **Directory Tree**  
