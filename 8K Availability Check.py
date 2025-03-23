@@ -4,9 +4,9 @@ from datetime import datetime
 
 # List of video URLs to monitor
 VIDEO_URLS = [
-    "https://www.youtube.com/watch?v=CdyWcKaFAqU",
-    "https://www.youtube.com/watch?v=F0cwPiOahQY",
-    "https://www.youtube.com/watch?v=p-hZmEFkXXo",
+    "https://www.youtube.com/watch?v=VIDEO01",
+    "https://www.youtube.com/watch?v=VIDEO02",
+    "https://www.youtube.com/watch?v=VIDEo03",
 ]
 
 LOG_FILE = "8k3_status_log.txt"
