@@ -156,5 +156,5 @@ Legacy Single File version of `ProRes→SVT-AV1.bat`
 **ffpb Progress Bug Fixed.py**  
 ffpb fork polished with AI to refine the number rounding calculations. This is because, in the original version of ffpb, when running a batch for several files, sometimes for some files the progress bar showed something like: `998/999 frames` and then continued processing the next file with no warning nor problem nor prompt. This lead me to think that ffmpeg was not performing correctly, when in fact, there is no problem with ffmpeg encoding progress per se at all. Seems it just was a problem on how ffpb makes its number calculations for showing the progress bar, as well as the processed frames.  
 
-**ffpb With Squares.py**
+**ffpb With Squares.py**  
 Just a aesthetics change. ffpb by default uses a series of number from 0-9, and then a hastag `#` for displaying the progress bar. This version just replaces the 0-9 numbers scale and `#` with a nice ASCII Square ■ Alt+254 
