@@ -37,7 +37,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
       ffprobe -hide_banner -i "input"
 
-  > Metadata is kept at minimum. "Encoder" tag should be inexistent in all Container, Video, and Audio Stream Metadata. For Video and Audio, only the absolutely essential "handler_name" and "vendor_id" are present, and even so, "vendor_id" is empty (Reported as [0][0][0][0] in ffmpeg). This is because seems like these tags are intrinsec of MOV/MP4 file's structure.
+  > Metadata is kept at minimum. "Encoder" tag should be inexistent in all Container, Video, and Audio Stream Metadata. For Video and Audio, only the absolutely essential "handler_name" and "vendor_id" are present, and even so, "vendor_id" is empty (Reported as `[0][0][0][0]` in ffmpeg). This is because seems like these tags are intrinsec of MOV/MP4 file's structure.
 
       Video
 
@@ -51,7 +51,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
         vendor_id: [0][0][0][0]
 
-- #### **Condition 02 - Check Framerate and Audio Sampe Rate**
+- #### **Condition 02 - Check Video Framerate and Audio Sample Rate**
 
       ffprobe -hide_banner -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1 "input" && ffprobe -hide_banner -v error -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 "input"  
 
@@ -63,7 +63,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
       Audio Sample Rate
 
-      48000
+      44100 or 48000
 
 - #### **Condition 03 - Check Media Time Stamps**
 
@@ -79,20 +79,20 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
       time_base=1/48000
 
-- #### **Condition 04 - Check if Fast Start is Enabled**
+- #### **Condition 04 - Check if Fast Start is Enabled - Method 01 - Seeks Number**
 
       ffprobe -hide_banner -v debug "input.mov" 2>&1 | Select-String seeks
 
   > If seeks 0 means Fast Start is Enabled
 
 
-- #### **Condition 05 - Check is Fast Start is Enabled - 2nd Method**
+- #### **Condition 05 - Check if Fast Start is Enabled - Method 02 - MOOV Atom Before MDAT Atom**
 
       ffmpeg -hide_banner -v trace -i "input.mov" 2>&1 | Select-String -Pattern "type:'mdat'", "type:'moov'"
 
   > If moov is at the beggining before mdat, Fast Start is Enabled
 
-- #### **Condition 06 - Check is Fast Start is Enabled - 3rd Method - Streamability Check**
+- #### **Condition 06 - Check if Fast Start is Enabled - Method 03 - Streamability Check with MediaInfo**
 
       mediainfo -f "input.mov" | Select-String IsStreamable
 
