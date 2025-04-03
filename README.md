@@ -37,7 +37,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
       ffprobe -hide_banner -i "input"
 
-  > Metadata is kept at minimum. "Encoder" tag is non-existent neither in Container, Video, nor Audio Stream Metadata. For Video and Audio, only the absolutely essential "handler_name" and "vendor_id" are present, and even so, "vendor_id" is empty (Reported as [0][0][0][0] in ffmpeg). This is because seems like these tags are intrinsec of MOV/MP4 file's structure.
+  > Metadata is kept at minimum. "Encoder" tag should be inexistent in all Container, Video, and Audio Stream Metadata. For Video and Audio, only the absolutely essential "handler_name" and "vendor_id" are present, and even so, "vendor_id" is empty (Reported as [0][0][0][0] in ffmpeg). This is because seems like these tags are intrinsec of MOV/MP4 file's structure.
 
       Video
 
