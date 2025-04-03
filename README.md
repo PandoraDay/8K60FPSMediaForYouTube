@@ -135,25 +135,29 @@ Resamples MOV 44100Hz Audio to Stereo PCM S16LE 48000Hz. Copies Video and cleans
 ### **MOV to SVT-AV1 MP4 to SVT-AV1 MP4.bat**
 This script performs two lossy encodings automatically: MOV→MP4A→MP4B  
 
-First Step  
-Scans for MOV Files in the currect directory non recursively.   
-Using ffmpeg, it converts MOV Apple ProRes 422 PCM S16LE 48000Hz Stereo to MP4 SVT-AV1 Opus 48000Hz Stereo and puts the MP4 A file in the `new` directory. All MOV Files are converted to MP4 A first in order for the second part of the script to run.  
+- #### **First Step**  
+> Scans for MOV Files in the currect directory non recursively. Using ffmpeg, it converts `MOV Apple ProRes 422 PCM S16LE 48000Hz Stereo` to `MP4 SVT-AV1 Opus 48000Hz Stereo 384kbps` and puts the MP4 A file in the `new` directory. All MOV Files are converted to MP4 A first in order for the second part of the script to run.
+ 
+> [!IMPORTANT]
+> The MP4 A Files resulting from this first conversion to AV1 have a weird Video Average Framerate, something like `13212000/220213`. This is the reason why a Second AV1 Lossy Encoding is required to get sharp and round 60FPS `60/1` AV1 MP4. This phenomena happens with either ffmpeg LibAOM and LibSVTAV1.   
 
-Second Step  
-Scans for MP4 A Files in the currect directory non recursively.  
-Then, it takes all the MP4 A encoded videos from the first lossy encoding in `new` directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 B of this second lossy encoding is stored in `new\svt` directory.  
+- #### **Second Step**  
+> Scans for MP4 A Files in the currect directory non recursively. Then, it takes all the MP4 A encoded videos from the first lossy encoding in `new` directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 B of this second lossy encoding is stored in `new\svt` directory and it has a sharp round 60FPS `60/1`  
 
-**MP4 AV1→MP4 AV1 SVT-AV1 60FPS.bat**  
+### **MP4 AV1→MP4 AV1 SVT-AV1 60FPS.bat**  
 Scans for MP4 Files in the currect directory non recursively. 
-Then, it takes all the MP4 files from current directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 of this lossy encoding is stored in `new` directory.  
+Then, it takes all the MP4 files from current directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 of this lossy encoding is stored in `new` directory and it has a sharp round 60FPS `60/1`.  
 
-**ProRes→LibAOM AV1 Lossless.bat**  
-Scans for MOV Files in the currect directory non recursively.  
-It performs a lossless encoding using ffmpeg LibAOM and Opus Audio and storages the resulting file in `new`. Script made for testing purposes only. Use with caution, taking special consideration with the `-cpu-used` parameter value.  
+### **ProRes→LibAOM AV1 Lossless.bat**  
+> [!WARNING]
+> Script made for testing purposes only. Use with caution, taking special consideration with the `-cpu-used` parameter value.
 
-**ProRes→SVT-AV1.bat**
+Scans for MOV Files in the currect directory non recursively.   
+It performs a lossless encoding using ffmpeg LibAOM and Opus Audio and storages the resulting file in `new`. Still, the resulting file from this lossless conversion to AV1 will have a weird Video Average Framerate, something like `13212000/220213` 
+
+### **ProRes→SVT-AV1.bat**
 Scans for MOV Files in the currect directory non recursively.  
-It performs an encoding using ffmpeg SVT-AV1 and Opus Audio and storages the resulting file in `new`.  
+It performs an encoding using ffmpeg SVT-AV1 and Opus Audio and storages the resulting file in `new`. The resulting file from this lossy conversion to AV1 will have a weird Video Average Framerate, something like `13212000/220213`  
 
 ### **clean.bat**  
 Legacy Single File version of `Clean MOV Only.bat`  
