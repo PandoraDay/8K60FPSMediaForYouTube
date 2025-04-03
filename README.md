@@ -146,7 +146,7 @@ This script performs two lossy encodings automatically: MOV→MP4A→MP4B
 
 ### **MP4 AV1→MP4 AV1 SVT-AV1 60FPS.bat**  
 Scans for MP4 Files in the currect directory non recursively. 
-Then, it takes all the MP4 files from current directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 of this lossy encoding is stored in `new` directory and it has a sharp round 60FPS `60/1`.  
+Then, it takes all the MP4 files from current directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 of this lossy encoding is stored in `new` directory. If the source MP4 is encoded in AV1 with a weird Video Average Framerate such as `13212000/220213`, this encoding will fix it and the resulting file will have a sharp round 60FPS `60/1`.  
 
 ### **ProRes→LibAOM AV1 Lossless.bat**  
 > [!WARNING]
