@@ -6,7 +6,7 @@ For context, Audio/Video technical details and workflow, please check my Reddit 
 [Part 02 - My experience uploading 8K resolution videos to YouTube](https://www.reddit.com/r/videography/comments/1jg89z7)
 
 ### **Dependencies**  
-Optional: [ffpb - A Terminal Progress Bar for ffmpeg](https://github.com/althonos/ffpb)  
+**Optional:** [ffpb - A Terminal Progress Bar for ffmpeg](https://github.com/althonos/ffpb)  
 ffmpeg 2025-03-20  
 ffprobe 2025-03-20  
 mediainfo v24.12  
@@ -14,7 +14,8 @@ Python 3.13
 yt-dlp 2025.02.19  
 Windows CMD  
 Windows PowerShell 7.5.0  
-Important for PS1 Files that invoke `Start-Job` for parallell processing. These PS1 Scripts might not work with PowerShell 5.0 included in Windows by default  
+> [!IMPORTANT]
+> These PS1 Files invoke `Start-Job` for parallell processing. Although these scripts seem to run well in Windows Powershell 5.1 (Included in Windows by default), Windows PowerShell 7.5.0 is recommended. 
 
 ### **Directory Tree**  
 Some of these scripts require the following Directory Tree: `Current Directory\new\svt`
