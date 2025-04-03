@@ -35,7 +35,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 ```
 Condition 01 - Metadata Clean Check
 
-Metadata is keep at minimum
+Metadata is keep at minimum. "Encoder" tag is non-existent neither in Container, Video, nor Audio Stream Metadata. For Video and Audio, only the absolutely essential "handler_name" and "vendor_id" are present, and even so, "vendor_id" is empty (Reported as [0][0][0][0] in ffmpeg). This is because seems like these tags are intrinsec of MOV/MP4 file's structure.
 
 Video
 
@@ -49,11 +49,24 @@ handler_name: SoundHandler
 
 vendor_id: [0][0][0][0]
 
-ffprobe -hide_banner -i "input.mov"
+ffprobe -hide_banner -i "input"
 
-Condition 02 - Check Media Time Stamps
+Condition 02 - Check Framerate and Audio Sampe Rate
+There should be 2 results in the output. If working with 44100Hz, Audio Sample Rate can be 44100 as well. It prompts the Average Framerate of a video, by actually analysing the frames of the video "stream=avg_frame_rate". This is different from just reading the Framerate information in the container with "stream=r_frame_rate", which might report 60FPS, but the video might actually have a different framerate value, leading to discrepancies.
 
-There should be 2 results in the output
+Video Average Framerate
+
+60/1
+
+Audio Sample Rate
+
+48000
+
+ffprobe -hide_banner -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1 "input" && ffprobe -hide_banner -v error -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 "input"
+
+Condition 03 - Check Media Time Stamps
+
+There should be 2 results in the output. If working with 44100Hz, Audio Time Stamp can be 1/44100 as well.
 
 Video Time Stamp
 
@@ -63,27 +76,37 @@ Audio Time Stamp
 
 time_base=1/48000
 
-If working with 44100Hz, Audio Time Stamp can be 1/44100 as well.
-
 ffprobe -i "input.mov" -hide_banner -show_streams | Select-String "time_base"
 
-Condition 03 - Check is Fast Start is Enabled
+Condition 04 - Check if Fast Start is Enabled
 
 #If seeks 0 means Fast Start is Enabled
 
 ffprobe -hide_banner -v debug "input.mov" 2>&1 | Select-String seeks
 
-Condition 04 - Check is Fast Start is Enabled - 2nd Method
+Condition 05 - Check is Fast Start is Enabled - 2nd Method
 
-#If mov is at the beggining, Fast Start is Enabled
+#If moov is at the beggining before mdat, Fast Start is Enabled
 
 ffmpeg -hide_banner -v trace -i "input.mov" 2>&1 | Select-String -Pattern "type:'mdat'", "type:'moov'"
 
-Condition 05 - Check is Fast Start is Enabled - 3rd Method - Streamability Check
+Condition 06 - Check is Fast Start is Enabled - 3rd Method - Streamability Check
 
 #If 'Yes' Fast Start is Enabled
 
 mediainfo -f "input.mov" | Select-String IsStreamable
+
+Condition 07 - Handler Names Check
+
+The value for the tag "handler_name" in Video Stream must be "VideoHandler" and in Audio Stream it must be "SoundHandler". If other values are found, it fails the verification.
+
+ffprobe -v quiet -print_format json -show_streams "input" 
+
+Condition 08 - Vendor ID Check
+
+The value for the tag "vendor_id" in both Video Stream and Audio Stream must be [0][0][0][0] which means "empty". FFMPEG reports [0][0][0][0] when the value is actually empty (00 00 00 00 values in Hexadecimal Analysing Program called HxD). If other values are found, it fails the verification. This includes cases when the vendor_id value seems empty, but it is actually populated by blank spaces (20 20 20 20 values in Hexadecimal Analysing Program called HxD). For some reason, FFMPEG always writes the value "FFMP" in the Video vendor_id, which has to be manually replaced by 00 00 00 00 in Hexadecimal Analysing Program.
+
+ffprobe -hide_banner -v error -select_streams v:0 -show_entries stream_tags=vendor_id -of default=noprint_wrappers=1:nokey=1 "input" && ffprobe -hide_banner -v error -select_streams a:0 -show_entries stream_tags=vendor_id -of default=noprint_wrappers=1:nokey=1 "input"
 ```   
 
 **Batch_Check_Media_Clean_Each_Recurse.ps1**  
