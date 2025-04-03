@@ -139,7 +139,7 @@ This script performs two lossy encodings automatically: MOV→MP4A→MP4B
 > Scans for MOV Files in the currect directory non recursively. Using ffmpeg, it converts `MOV Apple ProRes 422 PCM S16LE 48000Hz Stereo` to `MP4 SVT-AV1 Opus 48000Hz Stereo 384kbps` and puts the MP4 A file in the `new` directory. All MOV Files are converted to MP4 A first in order for the second part of the script to run.
  
 > [!IMPORTANT]
-> The MP4 A Files resulting from this first conversion to AV1 have a weird Video Average Framerate, something like `13212000/220213`. This is the reason why a Second AV1 Lossy Encoding is required to get sharp and round 60FPS `60/1` AV1 MP4. This phenomena happens with either ffmpeg LibAOM and LibSVTAV1.   
+> The MP4 A Files resulting from this first conversion to AV1 have a weird Video Average Framerate, something like `13212000/220213` which is reported as `59.9964579748 FPS` in both VLC Media Player and mpv Player. This is the reason why a Second AV1 Lossy Encoding is required to get sharp and round 60FPS `60/1` AV1 MP4. This phenomena happens with either ffmpeg LibAOM and LibSVTAV1.   
 
 - #### **Second Step**  
 > Scans for MP4 A Files in the currect directory non recursively. Then, it takes all the MP4 A encoded videos from the first lossy encoding in `new` directory, copies the audio stream and performs another lossy converstion using SVT-AV1. The resulting MP4 B of this second lossy encoding is stored in `new\svt` directory and it has a sharp round 60FPS `60/1`  
@@ -153,11 +153,11 @@ Then, it takes all the MP4 files from current directory, copies the audio stream
 > Script made for testing purposes only. Use with caution, taking special consideration with the `-cpu-used` parameter value.
 
 Scans for MOV Files in the currect directory non recursively.   
-It performs a lossless encoding using ffmpeg LibAOM and Opus Audio and storages the resulting file in `new`. Still, the resulting file from this lossless conversion to AV1 will have a weird Video Average Framerate, something like `13212000/220213` 
+It performs a lossless encoding using ffmpeg LibAOM and Opus Audio and storages the resulting file in `new`. Still, the resulting file from this lossless conversion to AV1 will have a weird Video Average Framerate, something like `13212000/220213` which is reported as `59.9964579748 FPS` in both VLC Media Player and mpv Player. 
 
 ### **ProRes→SVT-AV1.bat**
 Scans for MOV Files in the currect directory non recursively.  
-It performs an encoding using ffmpeg SVT-AV1 and Opus Audio and storages the resulting file in `new`. The resulting file from this lossy conversion to AV1 will have a weird Video Average Framerate, something like `13212000/220213`  
+It performs an encoding using ffmpeg SVT-AV1 and Opus Audio and storages the resulting file in `new`. The resulting file from this lossy conversion to AV1 will have a weird Video Average Framerate, something like `13212000/220213` which is reported as `59.9964579748 FPS` in both VLC Media Player and mpv Player.  
 
 ### **clean.bat**  
 Legacy Single File version of `Clean MOV Only.bat`  
