@@ -31,8 +31,8 @@ Checks and prints the exact date and time when a video is available for viewing 
 **8kyoutubecheck.ps1**  
 Checks and logs which videos from a YouTube Playlist are available to watch in 4320p60. In the log, a final summary of which videos are available to watch in 4320p60 and which videos are not available to watch in 4320p is printed with YouTube Links and Video Names.  
 
-**Batch_Check_MOV_Clean_Each.ps1**  
-Scans for MOV Files in the current directory non recursively and checks if the media is clean and uploadable by verifying the following conditions, prompting each check on the Terminal.
+**Batch_Check_Media_Clean_Each_NoRecurse.ps1**  
+Refined script for checking MOV and MP4 files if they are clean and uploadable with the following conditions. Scans the current directory non recursively and prompts each check for each file in the Terminal.
 
 ```
 Condition 01 - Metadata Clean Check
@@ -86,16 +86,7 @@ Condition 05 - Check is Fast Start is Enabled - 3rd Method - Streamability Check
 #If 'Yes' Fast Start is Enabled
 
 mediainfo -f "input.mov" | Select-String IsStreamable
-```
-
-**Batch_Check_MOV_Clean_Simple.ps1**  
-Same logic as `Batch_Check_MOV_Clean_Each.ps1`. Performs all the checks and simplifies the Terminal Output nice, clean and without clutter. PowerShell 7.5.0 is recommended, as it invokes `Start-Job` for Parallel Processing and performs the checks on multiple files at once. Without `Start-Job`, each file will be processed sequentially, which might take a long time if working with numerous files.   
-
-**Batch_Check_MP4_Clean_Each.ps1**  
-Same as `Batch_Check_MOV_Clean_Each.ps1`, but for MP4 Files instead of MOV Files.  
-
-**Batch_Check_Media_Clean_Each_NoRecurse.ps1**  
-Refined script for checking MOV and MP4 files if they are clean and uploadable with the same original conditions. Scans the current directory non recursively and prompts each check for each file in the Terminal.  
+```   
 
 **Batch_Check_Media_Clean_Each_Recurse.ps1**  
 Same as `Batch_Check_Media_Clean_Each_NoRecurse.ps1`. The only difference is that the script scans the current directory recursively with `Get-ChildItem -Recurse`  
@@ -140,9 +131,6 @@ It performs a lossless encoding using ffmpeg LibAOM and Opus Audio and storages 
 **ProRes→SVT-AV1.bat**
 Scans for MOV Files in the currect directory non recursively.  
 It performs an encoding using ffmpeg SVT-AV1 and Opus Audio and storages the resulting file in `new`.  
-
-**Single_File_Check_MOV_Clean.ps1**  
-Scans for the specified single MOV File in the current directory and checks if the MOV is clean and uploadable by verifying the original conditions, prompting each check on the Terminal. This script is legacy and has and old logic, so it is not caught up with the refined scripts. This means it might prompt a MOV File as "Not Clean", even if the same file passes all verification as being "Clean" with the other refined scripts.
 
 **clean.bat**  
 Legacy Single File version of `Clean MOV Only.bat`  
