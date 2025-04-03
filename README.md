@@ -51,7 +51,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
         vendor_id: [0][0][0][0]
 
-- **Condition 02 - Check Framerate and Audio Sampe Rate**
+- #### **Condition 02 - Check Framerate and Audio Sampe Rate**
 
       ffprobe -hide_banner -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1 "input" && ffprobe -hide_banner -v error -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 "input"  
 
@@ -65,7 +65,7 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
       48000
 
-- **Condition 03 - Check Media Time Stamps**
+- #### **Condition 03 - Check Media Time Stamps**
 
       ffprobe -i "input.mov" -hide_banner -show_streams | Select-String "time_base"
 
@@ -79,32 +79,32 @@ Refined script for checking MOV and MP4 files if they are clean and uploadable w
 
       time_base=1/48000
 
-- **Condition 04 - Check if Fast Start is Enabled**
+- #### **Condition 04 - Check if Fast Start is Enabled**
 
       ffprobe -hide_banner -v debug "input.mov" 2>&1 | Select-String seeks
 
   > If seeks 0 means Fast Start is Enabled
 
 
-- **Condition 05 - Check is Fast Start is Enabled - 2nd Method**
+- #### **Condition 05 - Check is Fast Start is Enabled - 2nd Method**
 
       ffmpeg -hide_banner -v trace -i "input.mov" 2>&1 | Select-String -Pattern "type:'mdat'", "type:'moov'"
 
   > If moov is at the beggining before mdat, Fast Start is Enabled
 
-- **Condition 06 - Check is Fast Start is Enabled - 3rd Method - Streamability Check**
+- #### **Condition 06 - Check is Fast Start is Enabled - 3rd Method - Streamability Check**
 
       mediainfo -f "input.mov" | Select-String IsStreamable
 
   > If 'Yes' Fast Start is Enabled
 
-- **Condition 07 - Handler Names Check**
+- #### **Condition 07 - Handler Names Check**
 
       ffprobe -v quiet -print_format json -show_streams "input"
 
   > The value for the tag "handler_name" in Video Stream must be "VideoHandler" and in Audio Stream it must be "SoundHandler". If other values are found, it fails the verification.
 
-- **Condition 08 - Vendor ID Check**
+- #### **Condition 08 - Vendor ID Check**
 
       ffprobe -hide_banner -v error -select_streams v:0 -show_entries stream_tags=vendor_id -of default=noprint_wrappers=1:nokey=1 "input" && ffprobe -hide_banner -v error -select_streams a:0 -show_entries stream_tags=vendor_id -of default=noprint_wrappers=1:nokey=1 "input"
   
